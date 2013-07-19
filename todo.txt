@@ -1,0 +1,4 @@
+1)move specific service provider to a configuration which we should be
+able to change while bootstrapping the app
+2)Change to Module autoload pattern, also use sandbox
+3) Change editor via config file

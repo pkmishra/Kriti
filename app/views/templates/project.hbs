@@ -1,0 +1,40 @@
+  <% _.each(rows, function(row) { %>
+        <tr class="defaultRow" vook="<%= row.title.replace(/'/g, '&rsquo;') %>" isbn="<%= row.isbn_enhanced %>" >
+            <td class="project-title">
+                <a href="/a/vookvook2/vookbuilder/<%= row.pk %>">
+                    <%= row.title.replace(new RegExp(input, 'ig'), '<span class="search_highlight">$&</span>') %>
+                </a>
+                <% if (row.current_publishing_state === "PENDING_DELIVERY" || row.current_publishing_state === "DELIVERED") { %>
+                <div class="title-status">Read only</div>
+                <% } else if (row.num_incomplete_entitlements > 0) { %>
+                <div class="title-status" tooltip='<a href="/api/v1/accounts/vookvook2/<%= row.pk %>/entitlement/" class="cancel-distribution">cancel distribution</a>'>
+                Preparing for distribution
+                </div>
+                <% } %>
+            </td>
+
+            <td class="ball-holder">
+            </td>
+
+            <td class="icons">
+                <% if (row.current_publishing_state == 'NEW' || row.current_publishing_state == 'VALIDATING' || row.current_publishing_state == 'CANNOT_PUBLISH') {%>
+                <a class="edit_link" href="/a/vookvook2/vookbuilder/<%= row.pk %>" tooltip="Edit eBook"></a>
+                <% } else { %>
+                <a class="edit_link disabled" tooltip="Sorry, you can&rsquo;t edit an eBook that was distributed. Remove the eBook from sale first."></a>
+                <% } %>
+
+                <% if (row.metricly_status) { %>
+                    <a class="metrics_link" href="" tooltip="Click here to see metrics for this title."></a>
+                <% } else { %>
+                    <a class="metrics_link disabled" tooltip="Metrics enabled when eBook is published through Vook."></a>
+                <% } %>
+
+                <% if (row.current_publishing_state == 'NEW' || row.current_publishing_state == 'VALIDATING' || row.current_publishing_state == 'CANNOT_PUBLISH') {%>
+				<a class="delete_link" href="/api/v1/vooks/vookvook2/<%= row.pk %>/" tooltip="Delete this eBook"></a>
+                <% } else { %>
+                <a class="delete_link disabled" tooltip="Sorry, you can&rsquo;t delete an eBook that was distributed. Remove the eBook from sale first."></a>
+                <% } %>
+            </td>
+        </tr>
+    <% }) %>
+

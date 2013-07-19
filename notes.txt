@@ -1,0 +1,4 @@
+Initially used embeded schema in MongoDb but later on realized that it
+is not required. In case of embeded document one need to go through top
+document everytime to query the child document which is not useful in
+our case
